@@ -1,7 +1,7 @@
 library(vegan)
 library(betapart) #sudo apt-get install libgmp3-dev
 #Set wd to source
-data <- as.matrix(sapply(read.table("otu_table_elevation.txt", sep = "\t",row.names = 1, skip = 1,as.is=T), as.numeric))
+data <- as.matrix(sapply(read.table("~/Documents/Monsoon/gitwork/otu_table_elevation.txt", sep = "\t",row.names = 1, skip = 1,as.is=T), as.numeric))
 
 
 colnames(data) <- c('PJset','GLCH4','GLH1','GLset','PJCH3','GLCH2','GLCH3','PJCH4','PPCH4','PPCH2','PPH1','PPset','PJH1','PJCH2')
@@ -10,17 +10,17 @@ colnames(data) <- c('PJset','GLCH4','GLH1','GLset','PJCH3','GLCH2','GLCH3','PJCH
 dataGL <- data[,c('GLCH4','GLH1','GLset','GLCH2','GLCH3')]
 dataGL <- dataGL[,c(3,2,4,5,1)]
 dataGL <- t(dataGL)
-dataGL[dataGLp > 0] <- 1
+dataGL[dataGL > 0] <- 1
 
 dataPJ <- data[,c('PJset','PJCH3','PJCH4','PJH1','PJCH2')]
 dataPJ <- dataPJ[,c(1,4,5,2,3)]
 dataPJ <- t(dataPJ)
-dataPJ[dataPJp > 0] <- 1
+dataPJ[dataPJ > 0] <- 1
 
 dataPP <- data[,c('PPCH4','PPCH2','PPH1','PPset')]
 dataPP <- dataPP[,c(4,3,2,1)]
 dataPP <- t(dataPP)
-dataPP[dataPPp !=  0] <- 1
+dataPP[dataPP !=  0] <- 1
 dataPP <- rbind('PPCH3' = NA, dataPP)
 dataPP <- dataPP[c(2,3,4,1,5),]
 
@@ -52,6 +52,7 @@ betaSIM <- function(df){
   return(df.turnover)
 }
 x <- c(36,72-36,110-72,152-110)
+betaSIM(dataGL)
 plot(x,betaSIM(dataGL), ylim = c(0,1), col = 'red')
 points(x, betaSIM(dataPJ), col = 'blue')
 points(x[c(1,2,4)], betaSIM(dataPP[c(1,2,3,5),]), col = 'green')
