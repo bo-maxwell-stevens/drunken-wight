@@ -1,0 +1,29 @@
+Num samples: 14
+Num observations: 2131
+Total count: 91935
+Table density (fraction of non-zero values): 0.246
+
+Counts/sample summary:
+ Min: 3275.0
+ Max: 20870.0
+ Median: 4600.500
+ Mean: 6566.786
+ Std. dev.: 4886.566
+ Sample Metadata Categories: None provided
+ Observation Metadata Categories: taxonomy
+
+Counts/sample detail:
+ PJH1: 3275.0
+ PPH1: 3336.0
+ PJCH2: 3449.0
+ GLCH3: 3705.0
+ PPCH2: 3795.0
+ PPCH4: 4057.0
+ GLCH2: 4537.0
+ PJCH4: 4664.0
+ PPset: 5034.0
+ GLset: 5353.0
+ GLH1: 5683.0
+ GLCH4: 10818.0
+ PJCH3: 13359.0
+ PJset: 20870.0

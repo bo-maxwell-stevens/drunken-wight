@@ -1,0 +1,66 @@
+Logging started at 12:01:23 on 16 Dec 2014
+QIIME version: 1.8.0
+
+qiime_config values:
+sc_queue	all.q
+torque_queue	friendlyq
+jobs_to_start	1
+cloud_environment	False
+denoiser_min_per_core	50
+python_exe_fp	python
+temp_dir	/tmp/
+blastall_fp	blastall
+seconds_to_sleep	2
+
+parameter file values:
+beta_diversity:metrics	abund_jaccard,binary_jaccard,bray_curtis,unweighted_unifrac,weighted_unifrac,binary_chord,chord,hellinger,kulczynski
+plot_taxa_summary:include_html_counts	True
+summarize_taxa:absolute_abundance	True
+summarize_taxa:level	2,3,4,5,6,7
+parallel:jobs_to_start	1
+
+Input file md5 sums:
+/home/bonobo/Documents/Monsoon/QIIME_output/Final_otu_table.biom: 342370d028658515d9cccb71a92bd365
+/home/bonobo/Documents/Monsoon/QIIME_output/Mapping.txt: baec0c87656174fded2307447c6528fc
+
+Executing commands.
+
+# Generate BIOM table summary command 
+biom summarize-table -i /home/bonobo/Documents/Monsoon/QIIME_output/Final_otu_table.biom -o /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/biom_table_summary.txt --suppress-md5 
+
+Stdout:
+
+Stderr:
+
+# Filter low sequence count samples from table (minimum sequence count: 3000) command 
+filter_samples_from_otu_table.py -i /home/bonobo/Documents/Monsoon/QIIME_output/Final_otu_table.biom -o /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/table_mc3000.biom -n 3000
+
+Stdout:
+
+Stderr:
+
+# Rarify the OTU table to 3000 sequences/sample command 
+single_rarefaction.py -i /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/table_mc3000.biom -o /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/table_even3000.biom -d 3000
+
+Stdout:
+
+Stderr:
+
+Executing commands.
+
+# Beta Diversity (abund_jaccard) command 
+python /home/bonobo/.virtualenvs/python/local/lib/python2.7/site-packages/scripts/beta_diversity.py -i /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/table_even3000.biom -o /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/bdiv_even3000/ --metrics abund_jaccard 
+
+
+
+*** ERROR RAISED DURING STEP: Beta Diversity (abund_jaccard)
+Command run was:
+ python /home/bonobo/.virtualenvs/python/local/lib/python2.7/site-packages/scripts/beta_diversity.py -i /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/table_even3000.biom -o /home/bonobo/Documents/Monsoon/script_output/test/Final_otu_table/bdiv_even3000/ --metrics abund_jaccard 
+Command returned exit status: 2
+Stdout:
+
+Stderr
+python: can't open file '/home/bonobo/.virtualenvs/python/local/lib/python2.7/site-packages/scripts/beta_diversity.py': [Errno 2] No such file or directory
+
+
+Logging stopped at 12:01:27 on 16 Dec 2014

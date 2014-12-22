@@ -1,10 +1,10 @@
 library(vegan)
 library(betapart) #sudo apt-get install libgmp3-dev
 #Set wd to source
-data <- as.matrix(sapply(read.table("~/Documents/Monsoon/gitwork/otu_table_elevation.txt", sep = "\t",row.names = 1, skip = 1,as.is=T), as.numeric))
+#data <- as.matrix(sapply(read.table("~/Documents/Monsoon/gitwork/otu_table_elevation.txt", sep = "\t",row.names = 1, skip = 1,as.is=T), as.numeric))
 data <- as.matrix(sapply(read.table("~/Documents/Monsoon/gitwork/otu_table_elevation_new.txt", sep = "\t",row.names = 1, skip = 1,as.is=T), as.numeric))
 head(data)
-colnames(data) <- c('PJset','GLCH4','GLH1','GLset','PJCH3','GLCH2','GLCH3','PJCH4','PPCH4','PPCH2','PPH1','PPset','PJH1','PJCH2')
+#colnames(data) <- c('PJset','GLCH4','GLH1','GLset','PJCH3','GLCH2','GLCH3','PJCH4','PPCH4','PPCH2','PPH1','PPset','PJH1','PJCH2')
 colnames(data) <- c('PJCH3','PJset','PPCH2','PPCH4','GLCH4','PJCH4','PPset','PPH1','GLCH2','PJCH2','GLset','PJH1','GLH1','GLCH3')
 #Changing abundance into presence/absence
 dataGL <- data[,c('GLCH4','GLH1','GLset','GLCH2','GLCH3')]
@@ -31,9 +31,10 @@ dataPJp[dataPJp > 0] <- 1
 
 dataPPp <- dataPP
 dataPPp[dataPPp > 0] <- 1
-
-bray.part(dataGL[c(1,2),])
-
+row.names(dataPPp)
+beta.pair(dataPPp[c(1,2,3,5),],index.family = "jaccard")$beta.jac
+bray.part(dataPP)$bray
+?bray.part
 #Creating function to loop over all possible comparisons
 
 betaSIM <- function(df){
@@ -71,7 +72,7 @@ betaBRAY_1 <- function(df){
 #?Big change from 0 to 1, very little change from 0-2,3,4
 
 #x = days since setup
-data.frame(cbind())
+
 x <- c(36,72,110,152)
 plot(x,betaSIM(dataGLp), ylim = c(0,1), col = 'red')
 points(x, betaSIM(dataPJp), col = 'blue')
@@ -118,6 +119,7 @@ delta.time <- c(36,72-32,110-72,152-110)
 plot(delta.time,betaBRAY_1(dataGL), col = 'red', pch = c('1','2','3','4'), xlim = c(35,45), ylim = c(0,1))
 points(delta.time, betaBRAY_1(dataPJ), col = 'blue', pch = c('1','2','3','4'))
 points(delta.time[c(1,2,4)], betaBRAY_1(dataPP[c(1,2,3,5),]), col = 'green', pch = c('1','2','4') )
+?bray.part
 reg1 <- lm(betaBRAY_1(dataGL) ~ delta.time)
 abline(reg1)
 summary(reg1)
@@ -129,16 +131,16 @@ abline(reg3)
 summary(reg3)
 ## Delta Bray_1 vs delta air temp
 delta.time <- c(36,72-32,110-72,152-110)
-plot(delta.airTemp3[1:4],betaBRAY_1(dataGL), col = 'red', pch = c('1','2','3','4'), xlim = c(35,45), ylim = c(0,1))
-points(delta.time, betaBRAY_1(dataPJ), col = 'blue', pch = c('1','2','3','4'))
-points(delta.time[c(1,2,4)], betaBRAY_1(dataPP[c(1,2,3,5),]), col = 'green', pch = c('1','2','4') )
+plot(delta.airTemp3[1:4],betaBRAY_1(dataGL), col = 'red', pch = c('1','2','3','4'), xlim = c(-5,14), ylim = c(0,1))
+plot(delta.airTemp3[5:8], betaBRAY_1(dataPJ), col = 'blue', pch = c('1','2','3','4'))
+plot(delta.airTemp3[c(9,10,12)], betaBRAY_1(dataPP[c(1,2,3,5),]), col = 'green', pch = c('1','2','4'), xlim = c(-5,14), ylim = c(0,1))
 reg1 <- lm(betaBRAY_1(dataGL) ~ delta.airTemp3[1:4])
 abline(reg1)
 summary(reg1)
-reg2 <- lm(betaBRAY_1(dataPJ) ~ delta.airTemp3[1:4])
+reg2 <- lm(betaBRAY_1(dataPJ) ~ delta.airTemp3[5:8])
 abline(reg2)
 summary(reg2)
-reg3 <- lm( betaBRAY_1(dataPP[c(1,2,3,5),]) ~ delta.time[c(1,2,4)])
+reg3 <- lm(betaBRAY_1(dataPP[c(1,2,3,5),]) ~ delta.airTemp3[c(9,10,12)])
 abline(reg3)
 summary(reg3)
 ####Making iterable plot for each variable
