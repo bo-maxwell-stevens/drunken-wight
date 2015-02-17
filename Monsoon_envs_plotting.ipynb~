@@ -659,8 +659,12 @@
      ],
      "language": "python",
      "metadata": {},
+<<<<<<< HEAD
+     "outputs": []
+=======
      "outputs": [],
      "prompt_number": 58
+>>>>>>> 4c1c3d5166a8286d71e6a4f3d29e38f3edf08fe2
     },
     {
      "cell_type": "code",
@@ -674,7 +678,11 @@
      "language": "python",
      "metadata": {},
      "outputs": [],
+<<<<<<< HEAD
+     "prompt_number": 16
+=======
      "prompt_number": 55
+>>>>>>> 4c1c3d5166a8286d71e6a4f3d29e38f3edf08fe2
     },
     {
      "cell_type": "code",
